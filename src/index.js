@@ -11,33 +11,27 @@ const colors = [
 
 const PROMPT_DELAY = 1000;
 let setId = null;
-let isActive = false;
 
 const randomIntegerFromInterval = (min, max) => {
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
 const buttonClick = document.querySelector(`body`);
+const buttonStart = document.querySelector(`button[data-action="start"]`);
+const buttonStop = document.querySelector(`button[data-action="stop"]`);
 
 buttonClick.addEventListener(`click`, e => {
-    if (e.target.dataset.action === `start`) startColor();
-    if (e.target.dataset.action === `stop`) stopColor();
-});
-
-function startColor() {
-     if (isActive) return;
-
+  if (e.target.dataset.action === `start`) {
     setId = setInterval(() => {
     buttonClick.style.backgroundColor = colors[randomIntegerFromInterval(0, colors.length)];
     }, PROMPT_DELAY);
-    isActive = true;  
-};
-
-function stopColor() {
+    buttonStart.disabled = true;
+  }
+  if (e.target.dataset.action === `stop`) {
     clearInterval(setId);
-    isActive = false;
-};
-
+    buttonStart.disabled = false;
+  }
+});
 
 
 
